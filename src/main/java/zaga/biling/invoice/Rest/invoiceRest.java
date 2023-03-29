@@ -7,9 +7,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -55,7 +55,7 @@ public Response createInvoice(Invoice invoice){
 }
 
 
-@POST
+@PUT
 @Path("/updateInvoice")
 @Operation(description = "Updating the invoice")
 public Response updateInvoice(Invoice invoice){
@@ -68,7 +68,7 @@ public Response updateInvoice(Invoice invoice){
     }
 
 }
-@POST
+@DELETE
 @Path("/deleteInvoice")
 @Operation(description = "Deleting a invoice by its ID")
 public Response deleteInvoice(String invoiceId){

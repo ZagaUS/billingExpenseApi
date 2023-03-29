@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties("{id}")
-@MongoEntity(collection = "BankDetail",database = "BillingInvoice")
+@JsonIgnoreProperties({"id"})
+@MongoEntity(collection = "ProjectBill",database = "BillingInvoice")
 
 public class ProjectBill extends PanacheMongoEntity{
     private String projectId;
