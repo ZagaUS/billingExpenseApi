@@ -16,16 +16,16 @@ import javax.inject.Inject;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import zaga.biling.invoice.Model.BankDetail;
-import zaga.biling.invoice.Service.bankDetailService;
+import zaga.biling.invoice.Service.BankDetailService;
 
 
 @Path("/Zaga/Invoice")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class bankdetailRest {
+public class BankdetailRest {
 
     @Inject
-    bankDetailService bService;
+    BankDetailService bService;
 
     @POST
     @Path(value = "/createBankDetails")
@@ -59,8 +59,8 @@ public Response getAllBankDetails()
 }
 
 
-@PUT
-@Path("/upadteBankDetails")
+@POST
+@Path("/updateBankDetails")
 @Operation(description = "Updating the bank details")
 public Response updateBankDetails(BankDetail bankDetail)
 {

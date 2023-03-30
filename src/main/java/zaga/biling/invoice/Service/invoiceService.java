@@ -6,7 +6,7 @@ import javax.ws.rs.core.Response;
 
 import zaga.biling.invoice.Model.Invoice;
 
-public interface invoiceService {
+public interface InvoiceService {
     Invoice addInvoice(Invoice invoice);
 
     List<Invoice> getAllInvoice();

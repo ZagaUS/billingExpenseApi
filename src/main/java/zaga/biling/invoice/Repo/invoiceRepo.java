@@ -9,7 +9,7 @@ import io.quarkus.mongodb.panache.PanacheQuery;
 import zaga.biling.invoice.Model.Invoice;
 
 @ApplicationScoped
-public class invoiceRepo implements PanacheMongoRepository<Invoice> {
+public class InvoiceRepo implements PanacheMongoRepository<Invoice> {
 
     public List<Invoice> getInvoiceDetails() {
      List<Invoice> invo = Invoice.listAll();

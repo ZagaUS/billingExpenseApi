@@ -17,15 +17,15 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 
 
 import zaga.biling.invoice.Model.Invoice;
-import zaga.biling.invoice.Service.invoiceService;
+import zaga.biling.invoice.Service.InvoiceService;
 
 @Path("/Zaga/Invoice")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class invoiceRest {
+public class InvoiceRest {
 
 @Inject
-invoiceService inService;
+InvoiceService inService;
 
 
 @GET
@@ -55,7 +55,7 @@ public Response createInvoice(Invoice invoice){
 }
 
 
-@PUT
+@POST
 @Path("/updateInvoice")
 @Operation(description = "Updating the invoice")
 public Response updateInvoice(Invoice invoice){

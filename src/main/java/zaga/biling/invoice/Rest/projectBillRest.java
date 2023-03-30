@@ -16,15 +16,15 @@ import javax.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import zaga.biling.invoice.Model.ProjectBill;
-import zaga.biling.invoice.Service.projectBillService;
+import zaga.biling.invoice.Service.ProjectBillService;
 
 @Path("/Zaga/Invoice")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class projectBillRest {
+public class ProjectBillRest {
 
  @Inject
- projectBillService proService;
+ ProjectBillService proService;
 
 @GET
 @Path("/getAllProjectBill")
@@ -38,18 +38,18 @@ public Response getProjectBill(){
     }
 }
 
-@POST
-@Path("/totalInvoiceAmount")
-@Operation(description = "Calculate the total Invoice amount")
-public Response calculateInvoiceAmount(ProjectBill proBill){
-try{
-    return proService.CalculateInvoiceAmt(proBill);
-}
-catch(Exception e){
-    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-}
+// @POST
+// @Path("/totalInvoiceAmount")
+// @Operation(description = "Calculate the total Invoice amount")
+// public Response calculateInvoiceAmount(ProjectBill proBill){
+// try{
+//     return proService.CalculateInvoiceAmt(proBill);
+// }
+// catch(Exception e){
+//     return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+// }
 
-}
+// }
 
 @POST
 @Path("/createProjectBill")
@@ -66,7 +66,7 @@ public Response createInvoice(ProjectBill proBill){
 }
 
 
-@PUT
+@POST
 @Path("/updateProjectBill")
 @Operation(description = "Updating the ProjectBill")
 public Response updateInvoice(ProjectBill proBill){

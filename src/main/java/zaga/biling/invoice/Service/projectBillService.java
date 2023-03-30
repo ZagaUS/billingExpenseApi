@@ -6,7 +6,7 @@ import javax.ws.rs.core.Response;
 
 import zaga.biling.invoice.Model.ProjectBill;
 
-public interface projectBillService {
+public interface ProjectBillService {
 
     List<ProjectBill> getAllProjectBill();
 
@@ -15,8 +15,9 @@ public interface projectBillService {
     Response editProjectBill(ProjectBill proBill);
 
     Response deleteProjectBill(String projectId);
+    String getInvoiceAmt(ProjectBill projectBill);
 
-    Response CalculateInvoiceAmt(ProjectBill proBill);
+    // Response CalculateInvoiceAmt(ProjectBill proBill);
 
     
 }

@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonIgnoreProperties({"id"})
 @MongoEntity(collection = "ProjectBill",database = "BillingInvoice")
-
 public class ProjectBill extends PanacheMongoEntity{
     private String projectId;
     private String po;

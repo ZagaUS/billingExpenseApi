@@ -7,14 +7,14 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import zaga.biling.invoice.Model.Invoice;
-import zaga.biling.invoice.Repo.invoiceRepo;
-import zaga.biling.invoice.Service.invoiceService;
+import zaga.biling.invoice.Repo.InvoiceRepo;
+import zaga.biling.invoice.Service.InvoiceService;
 
 @ApplicationScoped
-public class invoiceServiceImpl implements invoiceService {
+public class InvoiceServiceImpl implements InvoiceService {
     
     @Inject
-    invoiceRepo inrepo;
+    InvoiceRepo inrepo;
 
     @Override
     public Invoice addInvoice(Invoice invoice) {

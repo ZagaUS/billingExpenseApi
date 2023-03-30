@@ -7,14 +7,14 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import zaga.biling.invoice.Model.BankDetail;
-import zaga.biling.invoice.Repo.bankDetailRepo;
-import zaga.biling.invoice.Service.bankDetailService;
+import zaga.biling.invoice.Repo.BankDetailRepo;
+import zaga.biling.invoice.Service.BankDetailService;
 
 @ApplicationScoped
-public class bankDetailServiceImpl implements bankDetailService {
+public class BankDetailServiceImpl implements BankDetailService {
 
     @Inject
-    bankDetailRepo bRepo;
+    BankDetailRepo bRepo;
 
 
     @Override

@@ -7,15 +7,15 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import zaga.biling.invoice.Model.ProjectBill;
-import zaga.biling.invoice.Repo.projectBilRepo;
-import zaga.biling.invoice.Service.projectBillService;
+import zaga.biling.invoice.Repo.ProjectBilRepo;
+import zaga.biling.invoice.Service.ProjectBillService;
 
 @ApplicationScoped
-public class projectBillServiceImpl implements projectBillService{
+public class ProjectBillServiceImpl implements ProjectBillService{
 
 
     @Inject 
-    projectBilRepo proRepo;
+    ProjectBilRepo proRepo;
 
     @Override
     public List<ProjectBill> getAllProjectBill() {
@@ -26,6 +26,8 @@ public class projectBillServiceImpl implements projectBillService{
     @Override
     public ProjectBill addProjectBill(ProjectBill proBill) {
         ProjectBill.persist(proBill);
+        proRepo.getInvoiceAmt(proBill);
+        proRepo.updateInvoiceAmount(proBill);
         return proBill;
     }
 
@@ -40,13 +42,33 @@ public class projectBillServiceImpl implements projectBillService{
         proRepo.deleteProjectBillById(projectId);
         return Response.status(Response.Status.OK).build();
     }
-
-    @Override
-    public Response CalculateInvoiceAmt(ProjectBill proBill) {
-        proRepo.getInvoiceAmt(proBill);
-        proRepo.updateInvoiceAmount(proBill);
-        return Response.status(Response.Status.OK).build();
+     
+    public String getInvoiceAmt(ProjectBill projectBill)
+    {
+        System.out.println("InvoiceAmt: " + projectBill.getInvoiceAmount());
+        String md = projectBill.getMd();
+        String bilRate = projectBill.getBilRate();
+        String invoiceAmt = projectBill.getInvoiceAmount();
+        
+        int manday=Integer.parseInt(md); 
+        int billrate = Integer.parseInt(bilRate);
+        int invoiceamt = Integer.parseInt(invoiceAmt);
+        
+        invoiceamt = manday*billrate;
+        System.out.println("invoiceamt"+invoiceamt);
+        String invoice=String.valueOf(invoiceamt);
+        projectBill.setInvoiceAmount(invoice);
+        System.out.println("InvoiceAmt"+invoice);
+        return invoice;
     }
+
+
+    // @Override
+    // public Response CalculateInvoiceAmt(ProjectBill proBill) {
+    //     proRepo.getInvoiceAmt(proBill);
+    //     proRepo.updateInvoiceAmount(proBill);
+    //     return Response.status(Response.Status.OK).build();
+    // }
 
     
 }
