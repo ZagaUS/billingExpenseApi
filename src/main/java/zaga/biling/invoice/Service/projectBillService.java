@@ -15,7 +15,7 @@ public interface ProjectBillService {
     Response editProjectBill(ProjectBill proBill);
 
     Response deleteProjectBill(String projectId);
-    String getInvoiceAmt(ProjectBill projectBill);
+    // String getInvoiceAmt(ProjectBill projectBill);
 
     // Response CalculateInvoiceAmt(ProjectBill proBill);
 

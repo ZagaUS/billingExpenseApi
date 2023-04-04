@@ -25,9 +25,24 @@ public class ProjectBillServiceImpl implements ProjectBillService{
 
     @Override
     public ProjectBill addProjectBill(ProjectBill proBill) {
-        ProjectBill.persist(proBill);
-        proRepo.getInvoiceAmt(proBill);
+       // proRepo.getInvoiceAmt(proBill);
+
+        String md = proBill.getMd();
+        String bilRate = proBill.getBilRate();
+        String invoiceAmt = proBill.getInvoiceAmount();
+        
+        int manday=Integer.parseInt(md); 
+        int billrate = Integer.parseInt(bilRate);
+        int invoiceamt = Integer.parseInt(invoiceAmt);
+        
+        invoiceamt = manday*billrate;
+      
+        String invoice=String.valueOf(invoiceamt);
+        proBill.setInvoiceAmount(invoice);
         proRepo.updateInvoiceAmount(proBill);
+     
+        ProjectBill.persist(proBill);
+        
         return proBill;
     }
 
@@ -42,25 +57,26 @@ public class ProjectBillServiceImpl implements ProjectBillService{
         proRepo.deleteProjectBillById(projectId);
         return Response.status(Response.Status.OK).build();
     }
+
      
-    public String getInvoiceAmt(ProjectBill projectBill)
-    {
-        System.out.println("InvoiceAmt: " + projectBill.getInvoiceAmount());
-        String md = projectBill.getMd();
-        String bilRate = projectBill.getBilRate();
-        String invoiceAmt = projectBill.getInvoiceAmount();
+    // public String getInvoiceAmt(ProjectBill projectBill)
+    // {
+    //     System.out.println("InvoiceAmt: " + projectBill.getInvoiceAmount());
+    //     String md = projectBill.getMd();
+    //     String bilRate = projectBill.getBilRate();
+    //     String invoiceAmt = projectBill.getInvoiceAmount();
         
-        int manday=Integer.parseInt(md); 
-        int billrate = Integer.parseInt(bilRate);
-        int invoiceamt = Integer.parseInt(invoiceAmt);
+    //     int manday=Integer.parseInt(md); 
+    //     int billrate = Integer.parseInt(bilRate);
+    //     int invoiceamt = Integer.parseInt(invoiceAmt);
         
-        invoiceamt = manday*billrate;
-        System.out.println("invoiceamt"+invoiceamt);
-        String invoice=String.valueOf(invoiceamt);
-        projectBill.setInvoiceAmount(invoice);
-        System.out.println("InvoiceAmt"+invoice);
-        return invoice;
-    }
+    //     invoiceamt = manday*billrate;
+    //     System.out.println("invoiceamt"+invoiceamt);
+    //     String invoice=String.valueOf(invoiceamt);
+    //     projectBill.setInvoiceAmount(invoice);
+    //     System.out.println("InvoiceAmt"+invoice);
+    //     return invoice;
+    // }
 
 
     // @Override
