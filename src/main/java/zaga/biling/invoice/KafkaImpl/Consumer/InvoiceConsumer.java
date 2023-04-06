@@ -1,29 +1,27 @@
-package zaga.biling.invoice.KafkaImpl.Consumer;
+// package zaga.biling.invoice.KafkaImpl.Consumer;
 
-import java.util.ArrayList;
-import java.util.List;
+// import java.util.ArrayList;
+// import java.util.List;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+// import javax.ws.rs.GET;
+// import javax.ws.rs.Path;
 
-import org.eclipse.microprofile.reactive.messaging.Incoming;
+// import org.eclipse.microprofile.reactive.messaging.Incoming;
 
-import zaga.biling.invoice.Model.Invoice;
+// import zaga.biling.invoice.Model.Invoice;
 
-@Path("/ConsumeInvoKafka")
-public class InvoiceConsumer {
+// @Path("/ConsumeInvoKafka")
+// public class InvoiceConsumer {
 
+// List<Invoice> invoice = new ArrayList<>();
+// @GET
+// public List<Invoice> consumer(){
+// return invoice;
+// }
 
-    List<Invoice> invoice = new ArrayList<>();
-    @GET
-     public List<Invoice> consumer(){
-       return invoice;
-    }
+// @Incoming("Invoice-in")
+// public void invoiceList(Invoice in){
+// invoice.add(in);
+// }
 
-    @Incoming("Invoice-in")
-    public void invoiceList(Invoice in){
-          invoice.add(in);
-    }
-
-    
-}
+// }

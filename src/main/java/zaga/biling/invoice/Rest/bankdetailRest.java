@@ -21,7 +21,7 @@ import zaga.biling.invoice.Service.BankDetailService;
 @Path("/Zaga/Invoice")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class BankdetailRest {
+public class BankdetailRest{
 
     @Inject
     BankDetailService bService;
