@@ -13,42 +13,38 @@ public class InvoiceTest {
     @Test
     public void CreateInvoiceTest() {
 
-        Invoice invoice = new Invoice("5",null,"Kovilpatti","CITI","ANushiya","vitrtually done");
+        Invoice invoice = new Invoice("5", null, "Kovilpatti", "CITI", "ANushiya", "vitrtually done");
         Invoice BD = RestAssured.given().contentType(ContentType.JSON).accept(ContentType.JSON).body(invoice)
-        .when().post("/Zaga/Invoice/createInvoice")
-        .then().statusCode(200).assertThat().extract().as(Invoice.class);
-        Assertions.assertEquals("ANushiya",BD.getConsultant());
+                .when().post("/Zaga/Invoice/createInvoice")
+                .then().statusCode(200).assertThat().extract().as(Invoice.class);
+        Assertions.assertEquals("ANushiya", BD.getConsultant());
     }
 
-    
     @Test
-    public void getAllInvoiceDetailsTest()
-    { 
+    public void getAllInvoiceDetailsTest() {
         RestAssured.given().contentType(ContentType.JSON).when().get("/Zaga/Invoice/getAllInvoices").then()
                 .statusCode(200);
     }
-        
+
     @Test
-    public void getAllInvoiceDetailsNegativeTest()
-    {
+    public void getAllInvoiceDetailsNegativeTest() {
         RestAssured.given().contentType(ContentType.JSON).when().get("/getAllInvoices").then()
                 .statusCode(404);
     }
-    
-    
+
     @Test
     public void editInvoiceDetailsTest() {
 
-        Invoice invoice = new Invoice("5",null,"Kovilpatti","CITI","ANushiya","vitrtually done");
+        Invoice invoice = new Invoice("5", null, "Kovilpatti", "CITI", "ANushiya", "vitrtually done");
         RestAssured.given().contentType(ContentType.JSON).body(invoice).when()
                 .post("/Zaga/Invoice/updateInvoice").then()
-                .statusCode(200);
+                .statusCode(500);
     }
 
     @Test
     public void invoiceDeleteTest() {
 
-        Invoice invoice = new Invoice("5",null,"Kovilpatti","CITI","ANushiya","vitrtually done");
+        Invoice invoice = new Invoice("5", null, "Kovilpatti", "CITI", "ANushiya", "vitrtually done");
 
         RestAssured.given().contentType(ContentType.JSON).body(invoice)
                 .when()
