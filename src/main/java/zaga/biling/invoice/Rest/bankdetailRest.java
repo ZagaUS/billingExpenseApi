@@ -1,4 +1,4 @@
-package zaga.biling.invoice.Rest;
+package zaga.biling.invoice.rest;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -14,14 +14,13 @@ import javax.inject.Inject;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
-import zaga.biling.invoice.Model.BankDetail;
-import zaga.biling.invoice.Service.BankDetailService;
-
+import zaga.biling.invoice.model.BankDetail;
+import zaga.biling.invoice.service.BankDetailService;
 
 @Path("/Zaga/Invoice")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class BankdetailRest{
+public class BankdetailRest {
 
     @Inject
     BankDetailService bService;
@@ -29,48 +28,41 @@ public class BankdetailRest{
     @POST
     @Path(value = "/createBankDetails")
     @Operation(description = "create the bank details")
-    public Response createBankDetails(BankDetail bDetail)
-    {
-        try{
+    public Response createBankDetails(BankDetail bDetail) {
+        try {
             BankDetail bDetailNew = bService.addBankDetail(bDetail);
             return Response.status(Response.Status.OK).entity(bDetailNew).build();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
-    }
-    
-}
+        }
 
-@GET
-@Path(value = "/getAllBankCredential")
-@Operation(description ="Get all the bankDetails" )
-public Response getAllBankDetails()
-{
-    try{
-        List<BankDetail> bankdetail = bService.getBankDetails();
-        return Response.status(Response.Status.OK).entity(bankdetail).build();
     }
-    catch(Exception e){
-    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-    }
-}
 
-
-@POST
-@Path("/updateBankDetails")
-@Operation(description = "Updating the bank details")
-public Response updateBankDetails(BankDetail bankDetail)
-{
-    try{
-        return bService.editBankDetails(bankDetail);
-    }
-    catch(Exception e){
-        {
+    @GET
+    @Path(value = "/getAllBankCredential")
+    @Operation(description = "Get all the bankDetails")
+    public Response getAllBankDetails() {
+        try {
+            List<BankDetail> bankdetail = bService.getBankDetails();
+            return Response.status(Response.Status.OK).entity(bankdetail).build();
+        } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-}
+    }
 
-}
+    @POST
+    @Path("/updateBankDetails")
+    @Operation(description = "Updating the bank details")
+    public Response updateBankDetails(BankDetail bankDetail) {
+        try {
+            return bService.editBankDetails(bankDetail);
+        } catch (Exception e) {
+            {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+
+    }
 }

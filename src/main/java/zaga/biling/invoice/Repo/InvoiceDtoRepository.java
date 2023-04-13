@@ -1,13 +1,11 @@
-package zaga.biling.invoice.Repo;
+package zaga.biling.invoice.repo;
 
 import javax.enterprise.context.ApplicationScoped;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
-import zaga.biling.invoice.Model.InvoiceDto;
+import zaga.biling.invoice.model.InvoiceDto;
 
 @ApplicationScoped
 public class InvoiceDtoRepository implements PanacheMongoRepository<InvoiceDto> {
 
-    public InvoiceDto findById(String id) {
-        return find("invoiceId", id).firstResult();
-    }
+    
 }

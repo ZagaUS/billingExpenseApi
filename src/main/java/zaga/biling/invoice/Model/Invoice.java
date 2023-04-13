@@ -1,5 +1,6 @@
-package zaga.biling.invoice.Model;
+package zaga.biling.invoice.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,10 +18,20 @@ import lombok.NoArgsConstructor;
 @MongoEntity(collection = "Invoice", database = "BillingInvoice")
 public class Invoice extends PanacheMongoEntity {
 
-    private String invoiceId;
-    private Date date;
-    private String clientAddress;
-    private String projectName;
-    private String consultant;
-    private String note;
+    public String invoiceId;
+    public LocalDate date;
+    public String clientAddress;
+    public String projectName;
+    public String consultant;
+    public String note;
+
+    // data from project management
+
+    public String payOrder;
+    public String sfdc;
+    public String pa;
+    public Float totalManDays;
+    public Float manDays; // total man hours
+    public Float invoiceAmount;
+    public Float totalInvoiceAmount;
 }

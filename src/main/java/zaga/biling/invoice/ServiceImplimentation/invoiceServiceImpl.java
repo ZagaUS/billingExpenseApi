@@ -1,17 +1,16 @@
-package zaga.biling.invoice.ServiceImplimentation;
+package zaga.biling.invoice.serviceimplimentation;
 
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 
-import zaga.biling.invoice.Model.Invoice;
-import zaga.biling.invoice.Model.InvoiceDto;
-import zaga.biling.invoice.Repo.InvoiceDtoRepository;
-import zaga.biling.invoice.Repo.InvoiceRepo;
-import zaga.biling.invoice.Repo.SequenceRepository;
-import zaga.biling.invoice.Service.InvoiceService;
+import zaga.biling.invoice.model.Invoice;
+import zaga.biling.invoice.repo.InvoiceRepo;
+import zaga.biling.invoice.repo.SequenceRepository;
+import zaga.biling.invoice.service.InvoiceService;
 
 @ApplicationScoped
 public class InvoiceServiceImpl implements InvoiceService {
@@ -21,9 +20,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Inject
     SequenceRepository seqRepo;
-
-    @Inject
-    InvoiceDtoRepository dtoRepository;
 
     @Override
     public Invoice addInvoice(Invoice invoice) {
@@ -43,11 +39,11 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoices;
     }
 
-    @Override
-    public Response editInvoice(Invoice invoice) {
-        inrepo.findbyInvoiceId(invoice);
-        return Response.status(Response.Status.OK).build();
-    }
+    // @Override
+    // public Response editInvoice(Invoice invoice) {
+    // inrepo.findbyInvoiceId(invoice);
+    // return Response.status(Response.Status.OK).build();
+    // }
 
     @Override
     public Response deleteInvoice(String invoiceId) {
@@ -57,19 +53,32 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public InvoiceDto update(String id, InvoiceDto invoiceDto) {
-        InvoiceDto entity = dtoRepository.findById(id);
-        entity.setDate(invoiceDto.getDate());
-        entity.setClientAddress(invoiceDto.getClientAddress());
-        entity.setPayOrder(invoiceDto.getPayOrder());
-        entity.setSfdc(invoiceDto.getSfdc());
-        entity.setPa(invoiceDto.getPa());
-        entity.setTotalManDays(invoiceDto.getTotalManDays());
-        entity.setManDays(invoiceDto.getManDays());
-        entity.setInvoiceAmount(invoiceDto.getInvoiceAmount());
-        entity.setTolaInvoiceAmount(invoiceDto.getTolaInvoiceAmount());
-        dtoRepository.persist(entity);
-        return entity;
+    public Invoice update(String id, Invoice invoice) {
+        System.out.println("service");
+        Invoice existingInvoice = inrepo.findbyInvoiceId(id);
+        if (existingInvoice == null) {
+            throw new NotFoundException("Invoice not found");
+        }
+        existingInvoice.setDate(invoice.getDate());
+        existingInvoice.setProjectName(invoice.getProjectName());
+        existingInvoice.setConsultant(invoice.getConsultant());
+        existingInvoice.setClientAddress(invoice.getClientAddress());
+        existingInvoice.setNote(invoice.getNote());
+        existingInvoice.setPayOrder(invoice.getPayOrder());
+        existingInvoice.setSfdc(invoice.getSfdc());
+        existingInvoice.setPa(invoice.getPa());
+        existingInvoice.setTotalManDays(invoice.getTotalManDays());
+        existingInvoice.setManDays(invoice.getManDays());
+        existingInvoice.setInvoiceAmount(invoice.getInvoiceAmount());
+        existingInvoice.setTotalInvoiceAmount(invoice.getTotalInvoiceAmount());
+        inrepo.update(existingInvoice);
+        return existingInvoice;
+    }
+
+    @Override
+    public Invoice getInvoicebyId(String invoiceId) {
+        System.out.println("service");
+        return inrepo.findbyInvoiceId(invoiceId);
     }
 
 }

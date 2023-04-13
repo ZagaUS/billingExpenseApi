@@ -1,4 +1,4 @@
-package zaga.biling.invoice.Model;
+package zaga.biling.invoice.model;
 
 import java.time.LocalDate;
 

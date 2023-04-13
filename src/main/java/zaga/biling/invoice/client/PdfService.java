@@ -10,8 +10,8 @@ import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-import zaga.biling.invoice.Model.Invoice;
-import zaga.biling.invoice.Model.InvoiceDto;
+import zaga.biling.invoice.model.Invoice;
+import zaga.biling.invoice.model.InvoiceDto;
 
 @RegisterRestClient()
 public interface PdfService {
@@ -22,6 +22,6 @@ public interface PdfService {
 
     @POST
     @Path("/createInvoice")
-    public Response generateInvoicePdf(InvoiceDto invoice);
+    public Response generateInvoicePdf(Invoice invoice);
 
 }

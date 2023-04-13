@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import zaga.biling.invoice.Model.ProjectBill;
+import zaga.biling.invoice.model.ProjectBill;
 
 @QuarkusTest
 public class ProjectBillTest {

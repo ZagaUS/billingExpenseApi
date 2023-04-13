@@ -1,4 +1,4 @@
-package zaga.biling.invoice.Model;
+package zaga.biling.invoice.model;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties({ "id" })
 public class InvoiceDto {
 
+    private String invoiceId;
+
     private LocalDate date;
     private String clientAddress;
     public String payOrder;
@@ -28,7 +30,6 @@ public class InvoiceDto {
     // manDays; as totalManHours;
 
     // Below field need in updated in pdf service
-    // private String invoiceId;
     // private String projectName;
     // private String consultant;
     // public LocalDate startDate;

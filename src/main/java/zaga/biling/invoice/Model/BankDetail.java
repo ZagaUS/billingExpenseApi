@@ -1,4 +1,4 @@
-package zaga.biling.invoice.Model;
+package zaga.biling.invoice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"id"})
-@MongoEntity(collection = "BankDetail",database = "BillingInvoice")
-public class BankDetail extends PanacheMongoEntity{
+@JsonIgnoreProperties({ "id" })
+@MongoEntity(collection = "BankDetail", database = "BillingInvoice")
+public class BankDetail extends PanacheMongoEntity {
     private String gst;
     private String pan;
     private String cin;
@@ -22,5 +22,5 @@ public class BankDetail extends PanacheMongoEntity{
     private String bankAccount;
     private String ifsc;
     private String swiftCode;
-       
+
 }

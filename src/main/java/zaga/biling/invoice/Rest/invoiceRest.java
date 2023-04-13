@@ -1,4 +1,4 @@
-package zaga.biling.invoice.Rest;
+package zaga.biling.invoice.rest;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -21,12 +21,12 @@ import org.bson.types.Binary;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
-import zaga.biling.invoice.Model.Invoice;
-import zaga.biling.invoice.Model.InvoiceDto;
-import zaga.biling.invoice.Model.PdfEntity;
-import zaga.biling.invoice.Repo.PdfRepository;
-import zaga.biling.invoice.Service.InvoiceService;
 import zaga.biling.invoice.client.PdfService;
+import zaga.biling.invoice.model.Invoice;
+import zaga.biling.invoice.model.InvoiceDto;
+import zaga.biling.invoice.model.PdfEntity;
+import zaga.biling.invoice.repo.PdfRepository;
+import zaga.biling.invoice.service.InvoiceService;
 
 @Path("/Zaga/Invoice")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -55,38 +55,36 @@ public class InvoiceRest {
         }
     }
 
-    @POST
-    @Path("/createInvoice")
-    @Operation(description = "Creating a new invoice")
-    public Response createInvoice(Invoice invoice) {
-        try {
-            Invoice invoiceNew = inService.addInvoice(invoice);
-            return Response.status(Response.Status.OK).entity(invoiceNew).build();
-        } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+    // Operation(description = "Creating a new invoice")
+    // public Response createInvoice(Invoice invoice) {
+    // try {
+    // Invoice invoiceNew = inService.addInvoice(invoice);
+    // return Response.status(Response.Status.OK).entity(invoiceNew).build();
+    // } catch (Exception e) {
+    // return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+    // }
+    // }
 
-    @POST
-    @Path("/updateInvoice")
-    @Operation(description = "Updating the invoice")
-    public Response updateInvoice(Invoice invoice) {
-        try {
+    // @POST
+    // @Path("/updateInvoice")
+    // @Operation(description = "Updating the invoice")
+    // public Response updateInvoice(Invoice invoice) {
+    // try {
 
-            return inService.editInvoice(invoice);
-        } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+    // return inService.editInvoice(invoice);
+    // } catch (Exception e) {
+    // return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 
-        }
+    // }
 
-    }
+    // }
 
     @DELETE
     @Path("/deleteInvoice")
     @Operation(description = "Deleting a invoice by its ID")
     public Response deleteInvoice(String invoiceId) {
         try {
-            System.out.println("invoiceRest" + invoiceId);
+            // System.out.println("invoiceRest" + invoiceId);
             return inService.deleteInvoice(invoiceId);
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -96,11 +94,12 @@ public class InvoiceRest {
 
     @PUT
     @Path("/updateInvoiceData/{invoiceId}")
-    @Operation(description = "update a invoice by its ID")
-    public Response updateInvoicePdf(@PathParam("invoiceId") String invoiceId, InvoiceDto invoiceDto) {
+    @Operation(description = "update a invoice by its invoiceId")
+    public Response updateInvoicePdf(@PathParam("invoiceId") String invoiceId, Invoice invoice) {
         try {
-            inService.update(invoiceId, invoiceDto);
-            return Response.ok(invoiceDto).build();
+            System.out.println("Resource");
+            inService.update(invoiceId, invoice);
+            return Response.ok(invoice).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -108,7 +107,7 @@ public class InvoiceRest {
 
     @POST
     @Path("/createInvoicee/pdf")
-    public Response generateInvoicePdf(InvoiceDto invoice) throws IOException {
+    public Response generateInvoicePdf(Invoice invoice) throws IOException {
 
         try {
             PdfEntity pdfDocument = new PdfEntity();
@@ -120,15 +119,26 @@ public class InvoiceRest {
             InputStream inputStream = new ByteArrayInputStream(pdfBytes);
 
             pdfDocument.setData(new Binary(inputStream.readAllBytes()));
+
+            Invoice invoiceNew = inService.addInvoice(invoice);
+
             pdfRepository.persist(pdfDocument);
             return Response.ok(pdfDocument).build();
 
         } catch (Exception e) {
-            System.out.println("error");
-            e.printStackTrace();
-
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        return Response.noContent().build();
+
     }
 
+    @GET
+    @Path("/getInvoices/{id}")
+    public Response getById(@PathParam("id") String invoiceId) {
+        try {
+            Invoice invoice = inService.getInvoicebyId(invoiceId);
+            return Response.status(Response.Status.OK).entity(invoice).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

@@ -1,4 +1,4 @@
-// package zaga.biling.invoice.KafkaImpl.Consumer;
+// package zaga.biling.invoice.kafkaImpl.consumer;
 
 // import io.quarkus.kafka.client.serialization.ObjectMapperDeserializer;
 // import zaga.biling.invoice.Model.Invoice;
