@@ -1,4 +1,4 @@
-package zaga.biling.invoice.rest;
+package zaga.biling.invoice.Rest;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -10,8 +10,8 @@ import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
-import zaga.biling.invoice.model.SequenceCounters;
-import zaga.biling.invoice.repo.SequenceRepository;
+import zaga.biling.invoice.Model.SequenceCounters;
+import zaga.biling.invoice.Repo.SequenceRepository;
 
 @Path("/Zaga/Invoice")
 @Consumes(MediaType.APPLICATION_JSON)

@@ -1,9 +1,11 @@
-package zaga.biling.invoice.rest;
+package zaga.biling.invoice.Rest;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -14,16 +16,16 @@ import javax.inject.Inject;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
-import zaga.biling.invoice.model.BankDetail;
-import zaga.biling.invoice.service.BankDetailService;
+import zaga.biling.invoice.Model.BankDetail;
+import zaga.biling.invoice.Service.bankDetailService;
 
 @Path("/Zaga/Invoice")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class BankdetailRest {
+public class bankdetailRest {
 
     @Inject
-    BankDetailService bService;
+    bankDetailService bService;
 
     @POST
     @Path(value = "/createBankDetails")
@@ -52,12 +54,27 @@ public class BankdetailRest {
         }
     }
 
-    @POST
-    @Path("/updateBankDetails")
-    @Operation(description = "Updating the bank details")
-    public Response updateBankDetails(BankDetail bankDetail) {
+    // not required for now
+    @GET
+    @Path(value = "/getAllBankCredential/{bankAccount}")
+    @Operation(description = "Get the bankDetails by id ")
+    public Response getBankDetailsbyaccount(@PathParam("bankAccount") String bankAccount) {
         try {
-            return bService.editBankDetails(bankDetail);
+            BankDetail bankdetail = bService.getBankDetailsbyBankAccount(bankAccount);
+            return Response.status(Response.Status.OK).entity(bankdetail).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PUT
+    @Path("/updateBankDetails/{bankAccount}")
+    @Operation(description = "Updating the bank details")
+    public Response updateBankDetails(@PathParam("bankAccount") String bankAccount, BankDetail bankDetail) {
+        try {
+            BankDetail bankDetail2 = bService.editBankDetails(bankAccount, bankDetail);
+            return Response.status(Response.Status.OK).entity(bankDetail2).build();
+
         } catch (Exception e) {
             {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

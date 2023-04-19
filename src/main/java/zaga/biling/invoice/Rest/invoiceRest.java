@@ -1,4 +1,4 @@
-package zaga.biling.invoice.rest;
+package zaga.biling.invoice.Rest;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -22,19 +22,18 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import zaga.biling.invoice.client.PdfService;
-import zaga.biling.invoice.model.Invoice;
-import zaga.biling.invoice.model.InvoiceDto;
-import zaga.biling.invoice.model.PdfEntity;
-import zaga.biling.invoice.repo.PdfRepository;
-import zaga.biling.invoice.service.InvoiceService;
+import zaga.biling.invoice.Model.Invoice;
+import zaga.biling.invoice.Model.PdfEntity;
+import zaga.biling.invoice.Repo.PdfRepository;
+import zaga.biling.invoice.Service.invoiceService;
 
 @Path("/Zaga/Invoice")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class InvoiceRest {
+public class invoiceRest {
 
     @Inject
-    InvoiceService inService;
+    invoiceService inService;
 
     @Inject
     @RestClient

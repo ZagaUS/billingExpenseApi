@@ -1,4 +1,4 @@
-package zaga.biling.invoice.serviceimplimentation;
+package zaga.biling.invoice.ServiceImplimentation;
 
 import java.util.List;
 
@@ -6,15 +6,15 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
-import zaga.biling.invoice.model.ProjectBill;
-import zaga.biling.invoice.repo.ProjectBilRepo;
-import zaga.biling.invoice.service.ProjectBillService;
+import zaga.biling.invoice.Model.ProjectBill;
+import zaga.biling.invoice.Repo.projectBilRepo;
+import zaga.biling.invoice.Service.projectBillService;
 
 @ApplicationScoped
-public class ProjectBillServiceImpl implements ProjectBillService {
+public class projectBillServiceImpl implements projectBillService {
 
     @Inject
-    ProjectBilRepo proRepo;
+    projectBilRepo proRepo;
 
     @Override
     public List<ProjectBill> getAllProjectBill() {

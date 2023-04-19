@@ -1,4 +1,4 @@
-package zaga.biling.invoice.model;
+package zaga.biling.invoice.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

@@ -3,7 +3,7 @@ package zaga.biling.invoice.ServiceImplementation;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
-import zaga.biling.invoice.model.ProjectBill;
+import zaga.biling.invoice.Model.ProjectBill;
 
 @QuarkusTest
 public class ProjectBilServiceTest {

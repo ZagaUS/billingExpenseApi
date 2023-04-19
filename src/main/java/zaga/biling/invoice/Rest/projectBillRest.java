@@ -1,4 +1,4 @@
-package zaga.biling.invoice.rest;
+package zaga.biling.invoice.Rest;
 
 import java.util.List;
 
@@ -14,16 +14,16 @@ import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
-import zaga.biling.invoice.model.ProjectBill;
-import zaga.biling.invoice.service.ProjectBillService;
+import zaga.biling.invoice.Model.ProjectBill;
+import zaga.biling.invoice.Service.projectBillService;
 
 @Path("/Zaga/Invoice")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class ProjectBillRest {
+public class projectBillRest {
 
     @Inject
-    ProjectBillService proService;
+    projectBillService proService;
 
     @GET
     @Path("/getAllProjectBill")

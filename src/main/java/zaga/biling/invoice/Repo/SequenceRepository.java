@@ -1,10 +1,10 @@
-package zaga.biling.invoice.repo;
+package zaga.biling.invoice.Repo;
 
 import javax.enterprise.context.ApplicationScoped;
 
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import io.quarkus.mongodb.panache.PanacheQuery;
-import zaga.biling.invoice.model.SequenceCounters;
+import zaga.biling.invoice.Model.SequenceCounters;
 
 @ApplicationScoped
 public class SequenceRepository implements PanacheMongoRepository<SequenceCounters> {

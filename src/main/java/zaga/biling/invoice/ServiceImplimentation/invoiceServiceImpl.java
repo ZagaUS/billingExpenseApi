@@ -1,4 +1,4 @@
-package zaga.biling.invoice.serviceimplimentation;
+package zaga.biling.invoice.ServiceImplimentation;
 
 import java.util.List;
 
@@ -7,16 +7,16 @@ import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 
-import zaga.biling.invoice.model.Invoice;
-import zaga.biling.invoice.repo.InvoiceRepo;
-import zaga.biling.invoice.repo.SequenceRepository;
-import zaga.biling.invoice.service.InvoiceService;
+import zaga.biling.invoice.Model.Invoice;
+import zaga.biling.invoice.Repo.invoiceRepo;
+import zaga.biling.invoice.Repo.SequenceRepository;
+import zaga.biling.invoice.Service.invoiceService;
 
 @ApplicationScoped
-public class InvoiceServiceImpl implements InvoiceService {
+public class invoiceServiceImpl implements invoiceService {
 
     @Inject
-    InvoiceRepo inrepo;
+    invoiceRepo inrepo;
 
     @Inject
     SequenceRepository seqRepo;

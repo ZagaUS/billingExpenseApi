@@ -1,12 +1,12 @@
-package zaga.biling.invoice.service;
+package zaga.biling.invoice.Service;
 
 import java.util.List;
 
 import javax.ws.rs.core.Response;
 
-import zaga.biling.invoice.model.ProjectBill;
+import zaga.biling.invoice.Model.ProjectBill;
 
-public interface ProjectBillService {
+public interface projectBillService {
 
     List<ProjectBill> getAllProjectBill();
 
