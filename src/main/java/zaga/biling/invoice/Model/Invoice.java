@@ -24,14 +24,16 @@ public class Invoice extends PanacheMongoEntity {
     public String projectName;
     public String consultant;
     public String note;
-
-    // data from project management
-
     public String payOrder;
     public String sfdc;
     public String pa;
     public Float totalManDays;
-    public Float manDays; // total man hours
+    public Float manHours;
     public Float invoiceAmount;
     public Float totalInvoiceAmount;
+
+    public String projectId;
+    public LocalDate startDate;
+    public LocalDate endDate;
+
 }

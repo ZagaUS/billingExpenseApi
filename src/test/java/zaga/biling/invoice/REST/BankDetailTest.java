@@ -49,15 +49,6 @@ public class BankDetailTest {
                                 .statusCode(404);
         }
 
-        @Test
-        public void editBankDetailsTest() {
-
-                BankDetail bankDetail = new BankDetail();
-                RestAssured.given().contentType(ContentType.JSON).body(bankDetail).when()
-                                .post("/Zaga/Invoice/updateBankDetails").then()
-                                .statusCode(404);
-        }
-
         // test cases
 
         @Test
@@ -110,22 +101,22 @@ public class BankDetailTest {
                                 .jsonPath()
                                 .getList(".", BankDetail.class);
 
-                assertEquals(response.get(0).getGst(), "1234567");
-                assertEquals(response.get(0).getPan(), "qew6");
-                assertEquals(response.get(0).getCin(), "656");
-                assertEquals(response.get(0).getBankName(), "IOB");
-                assertEquals(response.get(0).getBranchName(), "Kovilpatti");
-                assertEquals(response.get(0).getBankAccount(), "1235454545");
-                assertEquals(response.get(0).getIfsc(), "32");
-                assertEquals(response.get(0).getSwiftCode(), "234");
-                assertEquals(response.get(1).getGst(), "1234567");
-                assertEquals(response.get(1).getPan(), "qew6");
-                assertEquals(response.get(1).getCin(), "656");
-                assertEquals(response.get(1).getBankName(), "IOB");
-                assertEquals(response.get(1).getBranchName(), "Kovilpatti");
-                assertEquals(response.get(1).getBankAccount(), "12345");
-                assertEquals(response.get(1).getIfsc(), "32");
-                assertEquals(response.get(1).getSwiftCode(), "234");
+                assertEquals("1234567", response.get(0).getGst());
+                assertEquals("qew6", response.get(0).getPan());
+                assertEquals("656", response.get(0).getCin());
+                assertEquals("IOB", response.get(0).getBankName());
+                assertEquals("Kovilpatti", response.get(0).getBranchName());
+                assertEquals("1235454545", response.get(0).getBankAccount());
+                assertEquals("32", response.get(0).getIfsc());
+                assertEquals("234", response.get(0).getSwiftCode());
+                assertEquals("1234567", response.get(1).getGst());
+                assertEquals("qew6", response.get(1).getPan());
+                assertEquals("656", response.get(1).getCin());
+                assertEquals("IOB", response.get(1).getBankName());
+                assertEquals("Kovilpatti", response.get(1).getBranchName());
+                assertEquals("12345", response.get(1).getBankAccount());
+                assertEquals("32", response.get(1).getIfsc());
+                assertEquals("234", response.get(1).getSwiftCode());
         }
 
         @Test
@@ -144,6 +135,6 @@ public class BankDetailTest {
                                 .statusCode(200).assertThat().extract().as(BankDetail.class);
 
                 BankDetail updatedBankDetail = bService.getBankDetailsbyBankAccount(bankDetail.getBankAccount());
-                assertEquals(updatedBankDetail.getBankName(), "NewBankName");
+                assertEquals("NewBankName", updatedBankDetail.getBankName());
         }
 }

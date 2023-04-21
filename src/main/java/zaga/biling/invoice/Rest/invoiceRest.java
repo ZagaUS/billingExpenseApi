@@ -25,6 +25,7 @@ import zaga.biling.invoice.client.PdfService;
 import zaga.biling.invoice.Model.Invoice;
 import zaga.biling.invoice.Model.PdfEntity;
 import zaga.biling.invoice.Repo.PdfRepository;
+import zaga.biling.invoice.Repo.SequenceRepository;
 import zaga.biling.invoice.Service.invoiceService;
 
 @Path("/Zaga/Invoice")
@@ -42,6 +43,9 @@ public class invoiceRest {
     @Inject
     PdfRepository pdfRepository;
 
+    @Inject
+    SequenceRepository seqRepo;
+
     @GET
     @Path("/getAllInvoices")
     @Operation(description = "Get all invoices")
@@ -54,36 +58,11 @@ public class invoiceRest {
         }
     }
 
-    // Operation(description = "Creating a new invoice")
-    // public Response createInvoice(Invoice invoice) {
-    // try {
-    // Invoice invoiceNew = inService.addInvoice(invoice);
-    // return Response.status(Response.Status.OK).entity(invoiceNew).build();
-    // } catch (Exception e) {
-    // return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-    // }
-    // }
-
-    // @POST
-    // @Path("/updateInvoice")
-    // @Operation(description = "Updating the invoice")
-    // public Response updateInvoice(Invoice invoice) {
-    // try {
-
-    // return inService.editInvoice(invoice);
-    // } catch (Exception e) {
-    // return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-
-    // }
-
-    // }
-
     @DELETE
-    @Path("/deleteInvoice")
+    @Path("/deleteInvoice/{invoiceId}")
     @Operation(description = "Deleting a invoice by its ID")
     public Response deleteInvoice(String invoiceId) {
         try {
-            // System.out.println("invoiceRest" + invoiceId);
             return inService.deleteInvoice(invoiceId);
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -112,6 +91,20 @@ public class invoiceRest {
             PdfEntity pdfDocument = new PdfEntity();
             pdfDocument.setProjectId("");
 
+            String seqNo = seqRepo.getSequenceCounter("document");
+
+            StringBuilder docId = new StringBuilder();
+            docId.append(invoice.projectName);
+            docId.append("_");
+            docId.append(invoice.date);
+            docId.append("_");
+            docId.append(seqNo);
+            // Setting PdfEntity properties
+            pdfDocument.setDocumentId(docId.toString());
+            pdfDocument.projectId = invoice.projectId;
+            pdfDocument.projectName = invoice.projectName;
+            pdfDocument.startDate = invoice.startDate;
+            pdfDocument.endDate = invoice.endDate;
             Response response = pdfService.generateInvoicePdf(invoice);
 
             byte[] pdfBytes = response.readEntity(byte[].class);
@@ -140,4 +133,27 @@ public class invoiceRest {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @GET
+    @Path("/invoice/{id}/pdf")
+    public Response getInvoicePdfById(@PathParam("id") String id) {
+        try {
+            PdfEntity pdfDocument = pdfRepository.findById(id);
+
+            if (pdfDocument == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+
+            byte[] pdfBytes = pdfDocument.getData().getData();
+            InputStream inputStream = new ByteArrayInputStream(pdfBytes);
+
+            return Response.ok(inputStream)
+                    .type("application/pdf")
+                    .header("Content-Disposition", "attachment; filename=invoice.pdf")
+                    .build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 }

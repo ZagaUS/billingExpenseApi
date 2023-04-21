@@ -26,8 +26,14 @@ public class invoiceServiceImpl implements invoiceService {
         System.out.println("Invoice inside service");
 
         String seqNo = seqRepo.getSequenceCounter("invoice");
-        invoice.setInvoiceId(seqNo);
-
+        // invoice.setInvoiceId(seqNo);
+        StringBuilder invoiceId = new StringBuilder();
+        invoiceId.append(invoice.projectName);
+        invoiceId.append("_");
+        invoiceId.append(seqNo);
+        // Setting PdfEntity properties
+        invoice.setInvoiceId(invoiceId.toString());
+        invoice.setNote("service done virtually");
         inrepo.persist(invoice);
         return invoice;
 
@@ -68,9 +74,12 @@ public class invoiceServiceImpl implements invoiceService {
         existingInvoice.setSfdc(invoice.getSfdc());
         existingInvoice.setPa(invoice.getPa());
         existingInvoice.setTotalManDays(invoice.getTotalManDays());
-        existingInvoice.setManDays(invoice.getManDays());
+        existingInvoice.setManHours(invoice.getManHours());
         existingInvoice.setInvoiceAmount(invoice.getInvoiceAmount());
         existingInvoice.setTotalInvoiceAmount(invoice.getTotalInvoiceAmount());
+        existingInvoice.setProjectId(invoice.getProjectId());
+        existingInvoice.setStartDate(invoice.getStartDate());
+        existingInvoice.setEndDate(invoice.getEndDate());
         inrepo.update(existingInvoice);
         return existingInvoice;
     }
