@@ -27,6 +27,7 @@ import zaga.biling.invoice.Model.PdfEntity;
 import zaga.biling.invoice.Repo.PdfRepository;
 import zaga.biling.invoice.Repo.SequenceRepository;
 import zaga.biling.invoice.Service.invoiceService;
+import zaga.biling.invoice.ServiceImplimentation.ResponseWrapper;
 
 @Path("/Zaga/Invoice")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -90,15 +91,35 @@ public class invoiceRest {
         try {
             PdfEntity pdfDocument = new PdfEntity();
             pdfDocument.setProjectId("");
+            // invoice id
+            String seqNo = seqRepo.getSequenceCounter("invoice");
+            StringBuilder invoiceId = new StringBuilder();
+            invoiceId.append(invoice.projectName);
+            invoiceId.append("_");
+            invoiceId.append(seqNo);
+            invoice.setInvoiceId(invoiceId.toString());
+            invoice.setNote("service done virtually");
 
-            String seqNo = seqRepo.getSequenceCounter("document");
+            // doc id
+            String documentseqNo = seqRepo.getSequenceCounter("document");
 
             StringBuilder docId = new StringBuilder();
             docId.append(invoice.projectName);
             docId.append("_");
             docId.append(invoice.date);
             docId.append("_");
-            docId.append(seqNo);
+            docId.append(documentseqNo);
+            // duration wrapping
+            StringBuilder duration = new StringBuilder();
+            duration.append(invoice.startDate);
+            duration.append("-");
+            duration.append(invoice.endDate);
+            invoice.setDuration(duration.toString());
+
+            Float invoiceAmount = invoice.manHours * invoice.rate;
+            invoice.setInvoiceAmount(invoiceAmount);
+            invoice.setTotalInvoiceAmount(invoiceAmount);
+
             // Setting PdfEntity properties
             pdfDocument.setDocumentId(docId.toString());
             pdfDocument.projectId = invoice.projectId;
@@ -115,7 +136,8 @@ public class invoiceRest {
             Invoice invoiceNew = inService.addInvoice(invoice);
 
             pdfRepository.persist(pdfDocument);
-            return Response.ok(pdfDocument).build();
+            ResponseWrapper responseWrapper = new ResponseWrapper(pdfDocument, invoiceNew);
+            return Response.ok(responseWrapper).build();
 
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

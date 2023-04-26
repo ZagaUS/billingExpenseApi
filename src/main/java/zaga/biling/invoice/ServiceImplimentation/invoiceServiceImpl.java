@@ -25,15 +25,6 @@ public class invoiceServiceImpl implements invoiceService {
     public Invoice addInvoice(Invoice invoice) {
         System.out.println("Invoice inside service");
 
-        String seqNo = seqRepo.getSequenceCounter("invoice");
-        // invoice.setInvoiceId(seqNo);
-        StringBuilder invoiceId = new StringBuilder();
-        invoiceId.append(invoice.projectName);
-        invoiceId.append("_");
-        invoiceId.append(seqNo);
-        // Setting PdfEntity properties
-        invoice.setInvoiceId(invoiceId.toString());
-        invoice.setNote("service done virtually");
         inrepo.persist(invoice);
         return invoice;
 

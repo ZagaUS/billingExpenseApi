@@ -9,16 +9,19 @@
 
 // import java.io.IOException;
 // import java.time.LocalDate;
+// import java.util.List;
 
 // import javax.inject.Inject;
 // import javax.ws.rs.core.Response;
 
 // import org.bson.types.Binary;
 // import org.junit.jupiter.api.Assertions;
+// import org.junit.jupiter.api.BeforeEach;
 // import org.junit.jupiter.api.Test;
 
 // import io.quarkus.test.junit.QuarkusTest;
 // import io.restassured.RestAssured;
+// import io.restassured.common.mapper.TypeRef;
 // import io.restassured.http.ContentType;
 // import zaga.biling.invoice.Model.Invoice;
 // import zaga.biling.invoice.Model.PdfEntity;
@@ -30,115 +33,62 @@
 // public class InvoiceTest {
 
 // @Inject
-// PdfService pdfService;
-
-// @Inject
 // invoiceService invoiceService;
 
 // @Inject
 // PdfRepository pdfRepository;
-// // @Test
-// // public void CreateInvoiceTest() {
 
-// // Invoice invoice = new Invoice("5", null, "Kovilpatti", "CITI", "ANushiya",
-// // "vitrtually done", null, null, null, null, null, null, null);
-// // Invoice BD =
-// //
-// //
-// RestAssured.given().contentType(ContentType.JSON).accept(ContentType.JSON).body(invoice)
-// // .when().post("/Zaga/Invoice/createInvoice")
-// // .then().statusCode(200).assertThat().extract().as(Invoice.class);
-// // Assertions.assertEquals("ANushiya", BD.getConsultant());
-// // }
-
-// // @Test
-// // public void testGenerateInvoicePdf() throws IOException {
-
-// // // create a test invoice
-// // Invoice invoice = new Invoice();
-// // invoice.setInvoiceId("INV-001");
-// // invoice.setDate(LocalDate.now());
-// // invoice.setClientAddress("123 Main St, Anytown USA");
-// // invoice.setProjectName("Test Project");
-// // invoice.setConsultant("John Doe");
-// // invoice.setNote("Test note");
-// // invoice.setPayOrder("PO-001");
-// // invoice.setSfdc("SFDC-001");
-// // invoice.setPa("PA-001");
-// // invoice.setTotalManDays(8.0f);
-// // invoice.setManDays(8.0f);
-// // invoice.setInvoiceAmount(1000.0f);
-// // invoice.setTotalInvoiceAmount(1000.0f);
-
-// // // mock the pdf service to return a byte array response
-// // byte[] pdfBytes = "test pdf content".getBytes();
-// // Response mockResponse = Response.ok(pdfBytes).build();
-// // when(pdfService.generateInvoicePdf(invoice)).thenReturn(mockResponse);
-
-// // // call the endpoint
-
-// // RestAssured.given().contentType(ContentType.JSON)
-// // .accept(ContentType.JSON)
-// // .body(invoice)
-// // .when()
-// // .post("/Zaga/Invoice/createInvoicee/pdf")
-// // .then()
-// // .statusCode(200).extract().response();
-
-// // // // verify the response body
-// // // PdfEntity pdfDocument = response.as(PdfEntity.class);
-// // // assertNotNull(pdfDocument.getId());
-// // // assertEquals("", pdfDocument.getProjectId());
-// // // assertNull(pdfDocument.getDocumentId());
-// // // assertNull(pdfDocument.getProjectName());
-// // // // assertArrayEquals(pdfBytes, pdfDocument.getData());
-// // // assertNotNull(pdfDocument.getStartDate());
-// // // assertNotNull(pdfDocument.getEndDate());
-
-// // // verify the invoice was added to the database
-// // Invoice savedInvoice = invoiceService.getInvoicebyId("INV-001");
-// // assertNotNull(savedInvoice);
-// // assertEquals(invoice.getClientAddress(), savedInvoice.getClientAddress());
-// // assertEquals(invoice.getProjectName(), savedInvoice.getProjectName());
-// // assertEquals(invoice.getConsultant(), savedInvoice.getConsultant());
-// // assertEquals(invoice.getNote(), savedInvoice.getNote());
-// // assertEquals(invoice.getPayOrder(), savedInvoice.getPayOrder());
-// // assertEquals(invoice.getSfdc(), savedInvoice.getSfdc());
-// // assertEquals(invoice.getPa(), savedInvoice.getPa());
-// // assertEquals(invoice.getTotalManDays(), savedInvoice.getTotalManDays());
-// // assertEquals(invoice.getManDays(), savedInvoice.getManDays());
-// // assertEquals(invoice.getInvoiceAmount(), savedInvoice.getInvoiceAmount());
-// // assertEquals(invoice.getTotalInvoiceAmount(),
-// // savedInvoice.getTotalInvoiceAmount());
-// // }
-
-// // @Test
-// public void getAllInvoiceDetailsTest() {
-// RestAssured.given().contentType(ContentType.JSON).when().get("/Zaga/Invoice/getAllInvoices").then()
-// .statusCode(200);
-// }
-
-// // @Test
-// public void getAllInvoiceDetailsNegativeTest() {
-// RestAssured.given().contentType(ContentType.JSON).when().get("/getAllInvoices").then()
-// .statusCode(404);
-// }
-
-// // @Test
-// // public void editInvoiceDetailsTest() {
-
-// // Invoice invoice = new Invoice("5", null, "Kovilpatti", "CITI", "ANushiya",
-// // "vitrtually done", null, null, null, null, null, null, null);
-// // RestAssured.given().contentType(ContentType.JSON).body(invoice).when()
-// // .post("/Zaga/Invoice/updateInvoice").then()
-// // .statusCode(500);
-// // }
-
-// // @Test
-// public void testDeleteInvoice() {
-// RestAssured.given()
-// .when().delete("/Zaga/Invoice/deleteInvoice/{invoiceId}", "5")
+// @Test
+// public void testGetAllInvoices() {
+// Invoice invoice = new Invoice("JPMorgan Chase_19", LocalDate.of(2023, 4, 7),
+// "US", "JPMorgan Chase", "Raghul",
+// "service done virtually", "22941671987802", "394220", "52717662029185", 7,
+// 56, 3920, 3920, "5",
+// LocalDate.of(2022, 3, 10), LocalDate.of(2022, 3, 10));
+// invoiceService.addInvoice(invoice);
+// List<Invoice> response = io.restassured.RestAssured.given()
+// .contentType(ContentType.JSON)
+// .when().get("/Zaga/Invoice/getAllInvoices")
 // .then()
-// .statusCode(200);
+// .statusCode(200).extract().body()
+// .jsonPath()
+// .getList(".", Invoice.class);
+
+// // assertEquals(1, invoice.size());
+// // Invoice invoice = invoice.get(0);
+// // assertEquals("JPMorgan Chase_19", response.get(0).getInvoiceId());
+// // assertEquals(LocalDate.of(2023, 4, 7), response.get(0).getDate());
+// // assertEquals("US", response.get(0).getClientAddress());
+// // assertEquals("JPMorgan Chase", response.get(0).getProjectName());
+// // assertEquals("Raghul", response.get(0).getConsultant());
+// // assertEquals("service done virtually", response.get(0).getNote());
+// // assertEquals("22941671987802", response.get(0).getPayOrder());
+// // assertEquals("394220", response.get(0).getSfdc());
+// // assertEquals("52717662029185", response.get(0).getPa());
+// // assertEquals(7, response.get(0).getTotalManDays());
+// // assertEquals(null, response.get(0).getManHours());
+// // assertEquals(3920, response.get(0).getInvoiceAmount());
+// // assertEquals(3920, response.get(0).getTotalInvoiceAmount());
+// // assertEquals("5", response.get(0).getProjectId());
+// // assertEquals(LocalDate.of(2022, 3, 10), response.get(0).getStartDate());
+// // assertEquals(LocalDate.of(2022, 3, 10), response.get(0).getEndDate());
+
+// assertEquals("JPMorgan Chase_19", invoice.invoiceId);
+
+// assertEquals(LocalDate.of(2023, 4, 7), invoice.date);
+// assertEquals("US", invoice.clientAddress);
+// assertEquals("JPMorgan Chase", invoice.projectName);
+// assertEquals("Raghul", invoice.consultant);
+// assertEquals("service done virtually", invoice.note);
+// assertEquals("22941671987802", invoice.payOrder);
+// assertEquals("394220", invoice.sfdc);
+// assertEquals("52717662029185", invoice.pa);
+// assertEquals(7, invoice.totalManDays);
+// assertEquals(null, invoice.manHours);
+// assertEquals(3920, invoice.invoiceAmount);
+// assertEquals(3920, invoice.totalInvoiceAmount);
+// assertEquals("5", invoice.projectId);
+// assertEquals(LocalDate.of(2022, 3, 10), invoice.startDate);
+// assertEquals(LocalDate.of(2022, 3, 10), invoice.endDate);
 // }
 // }
