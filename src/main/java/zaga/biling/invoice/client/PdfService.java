@@ -10,7 +10,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import zaga.biling.invoice.Model.Invoice;
 
-@RegisterRestClient()
+@RegisterRestClient(configKey = "pdf-api")
 public interface PdfService {
 
     @GET

@@ -3,6 +3,7 @@ package zaga.biling.invoice.Rest;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -157,22 +158,23 @@ public class invoiceRest {
     }
 
     @GET
-    @Path("/invoice/{id}/pdf")
-    public Response getInvoicePdfById(@PathParam("id") String id) {
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/invoice/{documentId}/pdf")
+    public Response getInvoicePdfById(@PathParam("documentId") String documentId) {
         try {
-            PdfEntity pdfDocument = pdfRepository.findById(id);
+            PdfEntity pdfDocument = pdfRepository.findById(documentId);
 
             if (pdfDocument == null) {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
+            String string = Base64.getEncoder().encodeToString(pdfDocument.getData().getData());
+            // byte[] pdfBytes = pdfDocument.getData().getData();
+            // InputStream inputStream = new ByteArrayInputStream(pdfBytes);
 
-            byte[] pdfBytes = pdfDocument.getData().getData();
-            InputStream inputStream = new ByteArrayInputStream(pdfBytes);
-
-            return Response.ok(inputStream)
-                    .type("application/pdf")
-                    .header("Content-Disposition", "attachment; filename=invoice.pdf")
-                    .build();
+            return Response.ok(string).build();
+            // .type("application/pdf")
+            // .header("Content-Disposition", "attachment; filename=invoice.pdf")
+            // .build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
