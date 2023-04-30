@@ -7,14 +7,16 @@
 # Before building the container image run:
 #
 # ./mvnw package -Pnative
-#
+# ./mvnw package -Pnative -Dquarkus.native.container-build=true -Dquarkus.native.container-runtime=docker -DskipTests
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.native-micro -t quarkus/zaga-invoice .
+# docker build -f src/main/docker/Dockerfile.native-micro -t wireghost13/billing-expense .
+#
+# docker push  wireghost13/billing-expense
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/zaga-invoice
+# docker run -i --rm -p 8083:8083 wireghost13/billing-expense
 #
 ###
 FROM quay.io/quarkus/quarkus-micro-image:2.0
@@ -24,7 +26,8 @@ RUN chown 1001 /work \
     && chown 1001:root /work
 COPY --chown=1001:root target/*-runner /work/application
 
-EXPOSE 8080
+EXPOSE 8083
 USER 1001
 
-CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0", "-Dquarkus.rest-client.pdf-api.url=https://document-service-jvm-zaga-office-automation.apps.zagaopenshift.zagaopensource.com/Zaga/document-service", "-Dquarkus.mongodb.connection-string=mongodb://mongodb-ops-manager:Devdbpass2023@mongodb-dev-ops-manager-db-0.mongodb-dev-ops-manager-db-svc.mongodb.svc.cluster.local:27017,mongodb-dev-ops-manager-db-1.mongodb-dev-ops-manager-db-svc.mongodb.svc.cluster.local:27017,mongodb-dev-ops-manager-db-2.mongodb-dev-ops-manager-db-svc.mongodb.svc.cluster.local:27017/BillingInvoice?authMechanism=SCRAM-SHA-256&authSource=admin&connectTimeoutMS=20000&replicaSet=mongodb-dev-ops-manager-db&serverSelectionTimeoutMS=20000", "-Dkafka.bootstrap.servers=172.30.198.82:9092", "-Dquarkus.http.cors=true", "-Dquarkus.http.cors.origins=*", "-Dquarkus.http.cors.headers=Authorization, Content-Type, X-Requested-With", "-Dquarkus.http.cors.methods=GET, POST, PUT, DELETE"]
