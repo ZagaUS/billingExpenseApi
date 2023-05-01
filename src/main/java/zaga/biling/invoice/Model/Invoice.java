@@ -35,6 +35,7 @@ public class Invoice extends PanacheMongoEntity {
     public String projectId;
     public LocalDate startDate;
     public LocalDate endDate;
+    public String documentId;
 
     public String duration;
     public Float rate;

@@ -127,6 +127,7 @@ public class invoiceRest {
             pdfDocument.projectName = invoice.projectName;
             pdfDocument.startDate = invoice.startDate;
             pdfDocument.endDate = invoice.endDate;
+            invoice.setDocumentId(docId.toString());
             Response response = pdfService.generateInvoicePdf(invoice);
 
             byte[] pdfBytes = response.readEntity(byte[].class);
