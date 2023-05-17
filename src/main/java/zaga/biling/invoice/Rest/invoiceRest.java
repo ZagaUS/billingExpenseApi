@@ -88,7 +88,7 @@ public class invoiceRest {
     @POST
     @Path("/createInvoicee/pdf")
     public Response generateInvoicePdf(Invoice invoice) throws IOException {
-
+      System.out.println("Invioce"+invoice);
         try {
             PdfEntity pdfDocument = new PdfEntity();
             pdfDocument.setProjectId("");
