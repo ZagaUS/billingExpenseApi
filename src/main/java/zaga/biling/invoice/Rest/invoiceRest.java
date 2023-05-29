@@ -181,4 +181,20 @@ public class invoiceRest {
         }
     }
 
+    @GET
+    @Path("/download/{documentId}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response downloadPdf(@PathParam("documentId") String documentId) {
+        // ObjectId objectId = new ObjectId(id);
+        PdfEntity pdf = pdfRepository.findById(documentId);
+            Binary pdfData = pdf.data;
+            
+            // Set the appropriate response headers
+            Response.ResponseBuilder responseBuilder = Response.ok(pdfData.getData());
+            responseBuilder.header("Content-Disposition", "attachment; filename=download.pdf");
+            responseBuilder.header("Content-Length", String.valueOf(pdfData.length()));
+            
+            return responseBuilder.build();
+        } 
+
 }
