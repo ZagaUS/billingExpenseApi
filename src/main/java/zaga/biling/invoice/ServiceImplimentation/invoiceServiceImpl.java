@@ -9,6 +9,7 @@ import javax.ws.rs.core.Response;
 
 import zaga.biling.invoice.Model.Invoice;
 import zaga.biling.invoice.Repo.invoiceRepo;
+import zaga.biling.invoice.Repo.PdfRepository;
 import zaga.biling.invoice.Repo.SequenceRepository;
 import zaga.biling.invoice.Service.invoiceService;
 
@@ -43,9 +44,9 @@ public class invoiceServiceImpl implements invoiceService {
     // }
 
     @Override
-    public Response deleteInvoice(String invoiceId) {
-        System.out.println("invoiceService" + invoiceId);
-        inrepo.deleteInvoiceById(invoiceId);
+    public Response deleteInvoice(String documentId) {
+        System.out.println("invoiceService" + documentId);
+        
         return Response.status(Response.Status.OK).build();
     }
 

@@ -73,7 +73,7 @@ public class invoiceRest {
     }
 
     @PUT
-    @Path("/updateInvoiceData/{invoiceId}")
+    @Path("/updateInvoiceData/{Id}")
     @Operation(description = "update a invoice by its invoiceId")
     public Response updateInvoicePdf(@PathParam("invoiceId") String invoiceId, Invoice invoice) {
         try {
@@ -94,15 +94,17 @@ public class invoiceRest {
             pdfDocument.setProjectId("");
             // invoice id
             String seqNo = seqRepo.getSequenceCounter("invoice");
+            String documentseqNo = seqRepo.getSequenceCounter("document");
             StringBuilder invoiceId = new StringBuilder();
             invoiceId.append(invoice.projectName);
             invoiceId.append("_");
-            invoiceId.append(seqNo);
-            invoice.setInvoiceId(invoiceId.toString());
+            invoiceId.append(invoice.date);
+            invoiceId.append("_");
+            invoiceId.append(documentseqNo);
             invoice.setNote("service done virtually");
 
             // doc id
-            String documentseqNo = seqRepo.getSequenceCounter("document");
+         
 
             StringBuilder docId = new StringBuilder();
             docId.append(invoice.projectName);
@@ -163,6 +165,7 @@ public class invoiceRest {
     @Path("/invoice/{documentId}/pdf")
     public Response getInvoicePdfById(@PathParam("documentId") String documentId) {
         try {
+            System.out.println(documentId);
             PdfEntity pdfDocument = pdfRepository.findById(documentId);
 
             if (pdfDocument == null) {
