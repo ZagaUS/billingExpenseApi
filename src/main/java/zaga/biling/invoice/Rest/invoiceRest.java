@@ -27,6 +27,7 @@ import zaga.biling.invoice.Model.Invoice;
 import zaga.biling.invoice.Model.PdfEntity;
 import zaga.biling.invoice.Repo.PdfRepository;
 import zaga.biling.invoice.Repo.SequenceRepository;
+import zaga.biling.invoice.Repo.invoiceRepo;
 import zaga.biling.invoice.Service.invoiceService;
 import zaga.biling.invoice.ServiceImplimentation.ResponseWrapper;
 
@@ -34,6 +35,10 @@ import zaga.biling.invoice.ServiceImplimentation.ResponseWrapper;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class invoiceRest {
+
+
+    @Inject
+    invoiceRepo repo;
 
     @Inject
     invoiceService inService;
@@ -65,7 +70,9 @@ public class invoiceRest {
     @Operation(description = "Deleting a invoice by its ID")
     public Response deleteInvoice(String invoiceId) {
         try {
-            return inService.deleteInvoice(invoiceId);
+            Invoice invoice = repo.findbyInvoiceId(invoiceId);
+            invoice.delete();
+            return Response.status(Response.Status.OK).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -94,17 +101,15 @@ public class invoiceRest {
             pdfDocument.setProjectId("");
             // invoice id
             String seqNo = seqRepo.getSequenceCounter("invoice");
-            String documentseqNo = seqRepo.getSequenceCounter("document");
             StringBuilder invoiceId = new StringBuilder();
             invoiceId.append(invoice.projectName);
             invoiceId.append("_");
-            invoiceId.append(invoice.date);
-            invoiceId.append("_");
-            invoiceId.append(documentseqNo);
+            invoiceId.append(seqNo);
+            invoice.setInvoiceId(invoiceId.toString());
             invoice.setNote("service done virtually");
 
             // doc id
-         
+            String documentseqNo = seqRepo.getSequenceCounter("document");
 
             StringBuilder docId = new StringBuilder();
             docId.append(invoice.projectName);
