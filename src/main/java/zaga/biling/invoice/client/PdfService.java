@@ -8,6 +8,7 @@ import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
+import zaga.biling.invoice.Model.CreditNote;
 import zaga.biling.invoice.Model.Invoice;
 
 @RegisterRestClient(configKey = "pdf-api")
@@ -20,5 +21,11 @@ public interface PdfService {
     @POST
     @Path("/createInvoice")
     public Response generateInvoicePdf(Invoice invoice);
+
+    @POST
+    @Path("/createCreditNote")
+    public Response generateCreditNotePdf(CreditNote creditNote);
+
+
 
 }
