@@ -16,6 +16,13 @@ public class invoiceRepo implements PanacheMongoRepository<Invoice> {
         return invo;
     }
 
+
+    public List<Invoice> getInvoiceDetails(String projectId) {
+        List<Invoice> invo = Invoice.list("projectId=?1", projectId);
+        return invo;
+    }
+
+
     // public Invoice findbyInvoiceId(Invoice invoice) {
     // String invoiceId = invoice.getInvoiceId();
     // PanacheQuery<Invoice> edit = Invoice.find("invoiceId = ?1 ", invoiceId);

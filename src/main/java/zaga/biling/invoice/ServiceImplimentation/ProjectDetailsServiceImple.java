@@ -37,6 +37,8 @@ public WeeklyTimesheet generateWeeeklyTimesheet(String projectName, LocalDate st
 
     List<DailyTimesheet> data = drepo.getDailyTimesheetsByprojectName(projectName);
 
+    System.out.println(data);
+
     List<DailyTimesheet> filteredData = data.stream()
     .filter(timesheet -> timesheet.getDate().isAfter(startDate.minusDays(1))
             && timesheet.getDate().isBefore(endDate.plusDays(1)))
@@ -46,11 +48,15 @@ public WeeklyTimesheet generateWeeeklyTimesheet(String projectName, LocalDate st
     .mapToDouble(DailyTimesheet::getHours)
     .sum();
 
+    System.out.println(filteredData.size());
+
+    Double manDays = (double) filteredData.size();
+
     result.setTimesheets(filteredData);
         result.setProjectName(projectName);
         result.setStartDate(startDate);
         result.setEndDate(endDate);
-        result.setDuration(sum);
+        result.setDuration(manDays);
         System.out.println(result);
         return result;
 
