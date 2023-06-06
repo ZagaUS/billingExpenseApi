@@ -37,6 +37,13 @@ public class invoiceServiceImpl implements invoiceService {
         return invoices;
     }
 
+    
+    @Override
+    public List<Invoice> getProjectInvoice(String projectId) {
+        List<Invoice> invoices = inrepo.getInvoiceDetails(projectId);
+        return invoices;
+    }
+
     // @Override
     // public Response editInvoice(Invoice invoice) {
     // inrepo.findbyInvoiceId(invoice);

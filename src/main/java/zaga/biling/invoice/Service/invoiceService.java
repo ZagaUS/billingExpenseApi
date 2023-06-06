@@ -18,5 +18,6 @@ public interface invoiceService {
     Response deleteInvoice(String invoiceId);
 
     Invoice update(String id, Invoice invoice);
+    List<Invoice> getProjectInvoice(String projectId);
 
 }
