@@ -65,6 +65,19 @@ public class invoiceRest {
         }
     }
 
+    @GET
+    @Path("/getProjectInvoices/{projectId}")
+    @Operation(description = "Get all invoices for a project")
+    public Response getProjectInvoices(String projectId) {
+        try {
+            List<Invoice> invoices = inService.getProjectInvoice(projectId);
+            return Response.status(Response.Status.OK).entity(invoices).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+
     @DELETE
     @Path("/deleteInvoice/{invoiceId}")
     @Operation(description = "Deleting a invoice by its ID")
