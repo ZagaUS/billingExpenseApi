@@ -26,7 +26,7 @@ import zaga.biling.invoice.Service.CreditNoteService;
 import zaga.biling.invoice.client.PdfService;
 
 
-@Path("/Zaga/CreditNote")
+@Path("/Zaga/Invoice")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CreditNoteRest {

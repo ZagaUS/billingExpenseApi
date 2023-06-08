@@ -16,6 +16,7 @@ import zaga.biling.invoice.Model.CreditNote;
 import zaga.biling.invoice.Model.PdfEntity;
 import zaga.biling.invoice.Repo.CreditNoteRepo;
 import zaga.biling.invoice.Repo.PdfRepository;
+import zaga.biling.invoice.Repo.SequenceRepository;
 import zaga.biling.invoice.Service.CreditNoteService;
 import zaga.biling.invoice.client.PdfService;
 
@@ -32,6 +33,9 @@ public class CreditNoteServiceImpl implements CreditNoteService{
     @Inject
     PdfRepository pdfRepo;
 
+    @Inject
+    SequenceRepository seqRepo;
+
     @Override
     public CreditNote addCreditNote(CreditNote creditNote) {
         repo.persist(creditNote);
@@ -41,13 +45,21 @@ public class CreditNoteServiceImpl implements CreditNoteService{
     @Override
     public Response generateCreditNote(CreditNote creditNote) throws IOException  {
         PdfEntity pdfEntity = new PdfEntity();
+        String seqNo = seqRepo.getSequenceCounter("creditNote");
+        System.out.println(creditNote);
+        creditNote.setCreditNoteId(seqNo);
         pdfEntity.setProjectId(creditNote.getProjectId());
         pdfEntity.setDocumentId(creditNote.getCreditNoteId());
+        System.out.println(creditNote);
         Response response = service.generateCreditNotePdf(creditNote);
         byte[] pdfBytes = response.readEntity(byte[].class);
         InputStream inputStream = new ByteArrayInputStream(pdfBytes);
         pdfEntity.setData(new Binary(inputStream.readAllBytes()));
+        System.out.println(creditNote);
+        // Invoice
+        // creditNote.setCreditNoteId()
         addCreditNote(creditNote);
+        System.out.println(pdfEntity);
         pdfRepo.persist(pdfEntity);
         return Response.ok(creditNote).build();
     }

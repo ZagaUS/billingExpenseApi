@@ -12,10 +12,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @MongoEntity(collection = "creditNote", database = "BillingInvoice")
-@JsonIgnoreProperties
+@JsonIgnoreProperties({"id"})
 public class CreditNote extends PanacheMongoEntity {
+
+
     
     public String creditNoteId;
+    public String invoiceId;
     public String clientAddress;
     public String ref;
     public String referenceInvoice;
