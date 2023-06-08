@@ -76,10 +76,10 @@ public class CreditNoteRest {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/creditNote/{documentId}/pdf")
-    public Response getInvoicePdfById(@PathParam("documentId") String documentId) {
+    @Path("/creditNote/{creditNoteId}/pdf")
+    public Response getInvoicePdfById(@PathParam("creditNoteId") String creditNoteId) {
         try {
-            PdfEntity pdfDocument = pdfRepository.findById(documentId);
+            PdfEntity pdfDocument = pdfRepository.findById(creditNoteId);
 
             if (pdfDocument == null) {
                 return Response.status(Response.Status.NOT_FOUND).build();

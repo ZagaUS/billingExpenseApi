@@ -1,5 +1,7 @@
 package zaga.biling.invoice.Model;
 
+import java.time.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
@@ -25,10 +27,12 @@ public class CreditNote extends PanacheMongoEntity {
     public String po;
     public String sfdc;
     public String pa;
-    public CurrencyType currencyType;
+    public String currencyType;
     public Float paidAmount;
     public Float actualAmount;
     public Float creditAmount;
     public String projectId;
+    public String projectName;
+    public LocalDate date;
 
 }

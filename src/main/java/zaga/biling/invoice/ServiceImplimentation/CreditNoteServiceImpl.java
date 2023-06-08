@@ -49,6 +49,7 @@ public class CreditNoteServiceImpl implements CreditNoteService{
         System.out.println(creditNote);
         creditNote.setCreditNoteId(seqNo);
         pdfEntity.setProjectId(creditNote.getProjectId());
+        // pdfEntity.setProjectName(creditNote.getProjectName());
         pdfEntity.setDocumentId(creditNote.getCreditNoteId());
         System.out.println(creditNote);
         Response response = service.generateCreditNotePdf(creditNote);
