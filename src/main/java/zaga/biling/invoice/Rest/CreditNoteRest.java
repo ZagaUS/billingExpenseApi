@@ -16,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.MediaType;
 
+import org.bson.types.Binary;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
@@ -96,5 +97,27 @@ public class CreditNoteRest {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @GET
+    @Path("/download/{creditNoteId}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response downloadPdf(@PathParam("creditNoteId") String creditNoteId) {
+        // ObjectId objectId = new ObjectId(id);
+        PdfEntity pdf = pdfRepository.findById(creditNoteId);
+            Binary pdfData = pdf.data;
+            
+            // Set the appropriate response headers
+            Response.ResponseBuilder responseBuilder = Response.ok(pdfData.getData());
+            responseBuilder.header("Content-Disposition", "attachment; filename=download.pdf");
+            responseBuilder.header("Content-Length", String.valueOf(pdfData.length()));
+            
+            return responseBuilder.build();
+        }
+
+
+
+
+
+
 
 }
