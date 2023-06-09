@@ -27,6 +27,7 @@ public class CreditNotePdf extends PanacheMongoEntity{
     public String documentId;
     public String projectName;
     public Binary data;
+    public String invoiceId;
 
     public String documentType;
 

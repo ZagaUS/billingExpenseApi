@@ -35,6 +35,7 @@ public class ProjectDetailsInRest {
     @Path("/getProjectDetailsInvoice/{projectName},{startDate},{endDate}")
     @Operation(description = "generate the invoice")
     public Response getProjectDetails(@PathParam ("projectName")String projectName,@PathParam ("startDate")LocalDate startDate,@PathParam("endDate")LocalDate endDate){
+        System.out.println("values " + projectName + " " + startDate + " " + endDate);
         ProjectDetails projectDetails = repo.findbyProjectName(projectName) ;         
         WeeklyTimesheet timesheetpdf = service.generateWeeeklyTimesheet(projectName, startDate, endDate);
 

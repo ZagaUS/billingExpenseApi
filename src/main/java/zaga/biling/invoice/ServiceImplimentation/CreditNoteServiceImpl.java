@@ -54,6 +54,7 @@ public class CreditNoteServiceImpl implements CreditNoteService{
         pdfEntity.setProjectId(creditNote.getProjectId());
         pdfEntity.setProjectName(creditNote.getProjectName());
         pdfEntity.setDocumentId(creditNote.getCreditNoteId());
+        pdfEntity.setInvoiceId(creditNote.getInvoiceId());
         System.out.println(creditNote);
         Response response = service.generateCreditNotePdf(creditNote);
         byte[] pdfBytes = response.readEntity(byte[].class);
@@ -71,6 +72,7 @@ public class CreditNoteServiceImpl implements CreditNoteService{
     @Override
     public List<CreditNotePdf> findCreditNotesByProjectId(String projectId) {
         List<CreditNotePdf> creditNotes = pdfRepo.findCreditNotesByProjectId(projectId);
+        // creditNotes.setInvoiceId()
         return creditNotes;       
     }
 

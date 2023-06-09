@@ -48,7 +48,9 @@ public WeeklyTimesheet generateWeeeklyTimesheet(String projectName, LocalDate st
     .mapToDouble(DailyTimesheet::getHours)
     .sum();
 
-    System.out.println(filteredData.size());
+    System.out.println("filetersize " + filteredData.size());
+
+    System.out.println("filteredData " + filteredData);
 
     Double manDays = (double) filteredData.size();
 
