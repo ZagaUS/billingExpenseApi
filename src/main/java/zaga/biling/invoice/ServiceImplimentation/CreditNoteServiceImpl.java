@@ -13,7 +13,9 @@ import org.bson.types.Binary;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import zaga.biling.invoice.Model.CreditNote;
+import zaga.biling.invoice.Model.CreditNotePdf;
 import zaga.biling.invoice.Model.PdfEntity;
+import zaga.biling.invoice.Repo.CreditNotePdfRepo;
 import zaga.biling.invoice.Repo.CreditNoteRepo;
 import zaga.biling.invoice.Repo.PdfRepository;
 import zaga.biling.invoice.Repo.SequenceRepository;
@@ -31,10 +33,11 @@ public class CreditNoteServiceImpl implements CreditNoteService{
     PdfService service;
 
     @Inject
-    PdfRepository pdfRepo;
+    CreditNotePdfRepo pdfRepo;
 
     @Inject
     SequenceRepository seqRepo;
+
 
     @Override
     public CreditNote addCreditNote(CreditNote creditNote) {
@@ -44,12 +47,12 @@ public class CreditNoteServiceImpl implements CreditNoteService{
         
     @Override
     public Response generateCreditNote(CreditNote creditNote) throws IOException  {
-        PdfEntity pdfEntity = new PdfEntity();
-        String seqNo = seqRepo.getSequenceCounter("creditNote");
+        CreditNotePdf pdfEntity = new CreditNotePdf();
+        String seqNo = seqRepo.getSequenceCounter("creditNotePdfs");
         System.out.println(creditNote);
         creditNote.setCreditNoteId(seqNo);
         pdfEntity.setProjectId(creditNote.getProjectId());
-        // pdfEntity.setProjectName(creditNote.getProjectName());
+        pdfEntity.setProjectName(creditNote.getProjectName());
         pdfEntity.setDocumentId(creditNote.getCreditNoteId());
         System.out.println(creditNote);
         Response response = service.generateCreditNotePdf(creditNote);
@@ -66,20 +69,20 @@ public class CreditNoteServiceImpl implements CreditNoteService{
     }
 
     @Override
-    public List<CreditNote> findCreditNotesByProjectId(String projectId) {
-        List<CreditNote> creditNotes = repo.findCreditNotesByProjectId(projectId);
+    public List<CreditNotePdf> findCreditNotesByProjectId(String projectId) {
+        List<CreditNotePdf> creditNotes = pdfRepo.findCreditNotesByProjectId(projectId);
         return creditNotes;       
     }
 
     @Override
-    public CreditNote findByCreditNoteId(String creditNoteId) {
-        CreditNote cr = repo.findbyCreditNoteId(creditNoteId);
+    public CreditNotePdf findByCreditNoteId(String documentId) {
+        CreditNotePdf cr = pdfRepo.findbyCreditNoteId(documentId);
         return cr;
     }
 
     @Override
-    public Response deleteCreditNote(String creditNoteId) {
-        repo.deleteCreditNoteById(creditNoteId);
+    public Response deleteCreditNote(String documentId) {
+        pdfRepo.deleteCreditNotePdfById(documentId);
         return Response.ok().build();
     }
 

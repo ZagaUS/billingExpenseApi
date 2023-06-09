@@ -112,6 +112,7 @@ public class invoiceRest {
         try {
             PdfEntity pdfDocument = new PdfEntity();
             pdfDocument.setProjectId("");
+            pdfDocument.setDocumentType("invoice");
             // invoice id
             String seqNo = seqRepo.getSequenceCounter("invoice");
             StringBuilder invoiceId = new StringBuilder();

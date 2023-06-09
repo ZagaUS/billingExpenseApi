@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.PanacheMongoEntityBase;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import lombok.AllArgsConstructor;
@@ -17,15 +18,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties({ "id" })
-@MongoEntity(collection = "pdfs", database = "BillingInvoice")
-public class PdfEntity extends PanacheMongoEntityBase {
+@MongoEntity(collection = "creditnotePdfs", database = "BillingInvoice")
 
+public class CreditNotePdf extends PanacheMongoEntity{
+    
     public ObjectId id;
     public String projectId;
     public String documentId;
     public String projectName;
     public Binary data;
-    public LocalDate startDate;
-    public LocalDate endDate;
+
     public String documentType;
+
 }
+

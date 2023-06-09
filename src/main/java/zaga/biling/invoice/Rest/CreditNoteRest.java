@@ -21,7 +21,9 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import zaga.biling.invoice.Model.CreditNote;
+import zaga.biling.invoice.Model.CreditNotePdf;
 import zaga.biling.invoice.Model.PdfEntity;
+import zaga.biling.invoice.Repo.CreditNotePdfRepo;
 import zaga.biling.invoice.Repo.PdfRepository;
 import zaga.biling.invoice.Service.CreditNoteService;
 import zaga.biling.invoice.client.PdfService;
@@ -40,14 +42,14 @@ public class CreditNoteRest {
     PdfService pdfService;
 
     @Inject
-    PdfRepository pdfRepository;
+    CreditNotePdfRepo pdfRepository;
 
     @GET
     @Path("/getCreditNotesByProjectId/{projectId}")
     @Operation(description = "Get all credit notes for a given project Id")
     public Response findCreditNoteByProjectId(@PathParam("projectId") String projectId) {
         try {
-            List<CreditNote> creditNotes = service.findCreditNotesByProjectId(projectId);
+            List<CreditNotePdf> creditNotes = service.findCreditNotesByProjectId(projectId);
             return Response.status(Response.Status.OK).entity(creditNotes).build();
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,10 +79,10 @@ public class CreditNoteRest {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/creditNote/{creditNoteId}/pdf")
-    public Response getInvoicePdfById(@PathParam("creditNoteId") String creditNoteId) {
+    @Path("/creditNote/{documentId}/pdf")
+    public Response getInvoicePdfById(@PathParam("documentId") String documentId) {
         try {
-            PdfEntity pdfDocument = pdfRepository.findById(creditNoteId);
+            CreditNotePdf pdfDocument = pdfRepository.findbyCreditNoteId(documentId);
 
             if (pdfDocument == null) {
                 return Response.status(Response.Status.NOT_FOUND).build();
@@ -99,11 +101,11 @@ public class CreditNoteRest {
     }
 
     @GET
-    @Path("/download/{creditNoteId}")
+    @Path("/creditNotePdf/download/{documentId}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response downloadPdf(@PathParam("creditNoteId") String creditNoteId) {
+    public Response downloadPdf(@PathParam("documentId") String documentId) {
         // ObjectId objectId = new ObjectId(id);
-        PdfEntity pdf = pdfRepository.findById(creditNoteId);
+        CreditNotePdf pdf = pdfRepository.findbyCreditNoteId(documentId);
             Binary pdfData = pdf.data;
             
             // Set the appropriate response headers
@@ -112,12 +114,6 @@ public class CreditNoteRest {
             responseBuilder.header("Content-Length", String.valueOf(pdfData.length()));
             
             return responseBuilder.build();
-        }
-
-
-
-
-
-
+        } 
 
 }

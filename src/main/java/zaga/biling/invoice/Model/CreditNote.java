@@ -28,6 +28,7 @@ public class CreditNote extends PanacheMongoEntity {
     public String sfdc;
     public String pa;
     public String currencyType;
+    public String documentType;
     public Float paidAmount;
     public Float actualAmount;
     public Float creditAmount;

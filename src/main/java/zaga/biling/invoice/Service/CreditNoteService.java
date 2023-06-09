@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.Response;
 
 import zaga.biling.invoice.Model.CreditNote;
+import zaga.biling.invoice.Model.CreditNotePdf;
 
 @ApplicationScoped
 public interface CreditNoteService {
@@ -15,9 +16,9 @@ public interface CreditNoteService {
 
     CreditNote addCreditNote(CreditNote creditNote);
 
-    List<CreditNote> findCreditNotesByProjectId(String projectId);
+    List<CreditNotePdf> findCreditNotesByProjectId(String projectId);
 
-    CreditNote findByCreditNoteId(String creditNoteId);
+    CreditNotePdf findByCreditNoteId(String creditNoteId);
 
     Response deleteCreditNote(String creditNoteId);
 
