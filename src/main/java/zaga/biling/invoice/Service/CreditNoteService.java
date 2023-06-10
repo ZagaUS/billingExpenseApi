@@ -18,8 +18,8 @@ public interface CreditNoteService {
 
     List<CreditNotePdf> findCreditNotesByProjectId(String projectId);
 
-    CreditNotePdf findByCreditNoteId(String creditNoteId);
+    CreditNotePdf findByCreditNoteId(String documentId);
 
-    Response deleteCreditNote(String creditNoteId);
+    Response deleteCreditNote(String documentId);
 
 }
