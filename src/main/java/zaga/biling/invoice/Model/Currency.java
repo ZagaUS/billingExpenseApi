@@ -1,5 +1,5 @@
 package zaga.biling.invoice.Model;
 
 public enum Currency {
-    SGD,INR, MYR, USD
+    SGD, USD, EUR, INR, JPN, MYR
 }

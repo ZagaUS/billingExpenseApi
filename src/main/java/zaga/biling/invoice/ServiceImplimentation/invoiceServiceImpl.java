@@ -25,8 +25,12 @@ public class invoiceServiceImpl implements invoiceService {
     @Override
     public Invoice addInvoice(Invoice invoice) {
         System.out.println("Invoice inside service");
+        System.out.println("-----------------------------------------");
+        System.out.println("Prints the currency:");
+System.out.println(invoice.getClientCurrency());
+        System.out.println("Prints the currency:");
+inrepo.persist(invoice);
 
-        inrepo.persist(invoice);
         return invoice;
 
     }
