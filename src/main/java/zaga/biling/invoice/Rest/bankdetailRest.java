@@ -33,7 +33,7 @@ public class bankdetailRest {
     public Response createBankDetails(BankDetail bDetail) {
         try {
             BankDetail bDetailNew = bService.addBankDetail(bDetail);
-            System.out.println("BankDetail: ");
+            System.out.println("BankDetail 1: ");
             return Response.status(Response.Status.OK).entity(bDetailNew).build();
         } catch (Exception e) {
             {
